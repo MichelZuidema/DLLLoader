@@ -68,9 +68,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 38);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.Size = new System.Drawing.Size(148, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Process Name:";
+            this.label2.Text = "Process Name (Without .exe):";
             // 
             // label3
             // 

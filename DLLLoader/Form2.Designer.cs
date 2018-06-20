@@ -35,6 +35,7 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
+            this.lblInjectInfo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblCheck
@@ -102,11 +103,21 @@
             this.lblStatus.TabIndex = 7;
             this.lblStatus.Text = "lblStatus";
             // 
+            // lblInjectInfo
+            // 
+            this.lblInjectInfo.AutoSize = true;
+            this.lblInjectInfo.Location = new System.Drawing.Point(12, 127);
+            this.lblInjectInfo.Name = "lblInjectInfo";
+            this.lblInjectInfo.Size = new System.Drawing.Size(61, 13);
+            this.lblInjectInfo.TabIndex = 8;
+            this.lblInjectInfo.Text = "lblInjectInfo";
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(322, 381);
+            this.Controls.Add(this.lblInjectInfo);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnExit);
@@ -131,5 +142,6 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.Label lblInjectInfo;
     }
 }

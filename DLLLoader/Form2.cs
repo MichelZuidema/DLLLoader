@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -42,6 +44,7 @@ namespace DLLLoader
             txtSystemHWID.Text = HWID;
             txtSystemHWID.ReadOnly = true;
 
+            lblInjectInfo.Text = "";
         }
 
         public void GetDataFromForm(string Process, string DLLFilePath)
@@ -99,7 +102,7 @@ namespace DLLLoader
             return false;
         }
 
-        private bool InjectAllowed()
+        private void InjectAllowed()
         {
             try
             {
@@ -119,7 +122,10 @@ namespace DLLLoader
 
                         if(active_sub == "TRUE")
                         {
-                            return true;
+                            InjectDLL("Allowed");
+                        } else
+                        {
+                            InjectDLL("Not Allowed");
                         }
                     }
                     connection.Close();
@@ -132,18 +138,36 @@ namespace DLLLoader
             {
                 MessageBox.Show(ex.ToString(), "Failed");
             }
-            InjectDLL();
-            return false;
         }
 
-        private void InjectDLL()
+        private void InjectDLL(string allowed)
         {
-            if(this.InjectAllowed() == true)
+            if(allowed == "Allowed")
             {
-                MessageBox.Show("Is whitelisted");
+                // DLLPath
+                // ProcessName
+                var ProcessTarget = Process.GetProcessesByName(ProcessName).FirstOrDefault();
+                var TargetFile = File.ReadAllBytes(DLLPath);
+
+                if(!File.Exists(DLLPath))
+                {
+                    MessageBox.Show("DLL not found", "File Error");
+                    return;
+                }
+
+                var injector = new ManualMapInjector(ProcessTarget) { AsyncInjection = true };
+                lblInjectInfo.Text = $"hmodule = 0x{injector.Inject(TargetFile).ToInt64():x8}";
+
+                btnInject.Text = "Injected";
+                btnInject.Enabled = false;
+
+                if(File.Exists(DLLPath))
+                {
+                    File.Delete(DLLPath);
+                }
             } else
             {
-                MessageBox.Show("HWID not whitelisted.");
+                MessageBox.Show("Your HWID has not been whitelisted.");
             }
         }
 
